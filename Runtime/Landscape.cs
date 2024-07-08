@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 
 namespace EliotByte.AsyncTerrain
 {
@@ -14,6 +14,7 @@ namespace EliotByte.AsyncTerrain
         public Material Material { get; private set; }
         public Vector3 Size { get; private set; }
         public Mesh Mesh { get; private set; }
+        public Vector3[] Vertices { get; private set; }
 
         public void Initialize(Material material)
         {
@@ -61,7 +62,7 @@ namespace EliotByte.AsyncTerrain
         private void GenerateMesh()
         {
             Mesh = new Mesh();
-            Vector3[] vertices = new Vector3[Width * Height];
+            Vertices = new Vector3[Width * Height];
             Vector2[] uv = new Vector2[Width * Height];
             int[] triangles = new int[(Width - 1) * (Height - 1) * 6];
 
@@ -70,7 +71,7 @@ namespace EliotByte.AsyncTerrain
                 for (int y = 0; y < Height; y++)
                 {
                     int index = x + y * Width;
-                    vertices[index] = new Vector3(x * Size.x / (Width - 1), Heights[x, y] * Size.y,
+                    Vertices[index] = new Vector3(x * Size.x / (Width - 1), Heights[x, y] * Size.y,
                         y * Size.z / (Height - 1));
                     uv[index] = new Vector2((float)x / (Width - 1), (float)y / (Height - 1));
                 }
@@ -96,7 +97,7 @@ namespace EliotByte.AsyncTerrain
                 }
             }
 
-            Mesh.vertices = vertices;
+            Mesh.vertices = Vertices;
             Mesh.uv = uv;
             Mesh.triangles = triangles;
             Mesh.RecalculateNormals();
@@ -106,17 +107,15 @@ namespace EliotByte.AsyncTerrain
 
         private void UpdateMesh()
         {
-            Vector3[] vertices = Mesh.vertices;
-
             for (int x = 0; x < Width; x++)
             {
                 for (int y = 0; y < Height; y++)
                 {
-                    vertices[x + y * Width].y = Heights[x, y] * Size.y;
+                    Vertices[x + y * Width].y = Heights[x, y] * Size.y;
                 }
             }
 
-            Mesh.vertices = vertices;
+            Mesh.vertices = Vertices;
             Mesh.RecalculateNormals();
         }
 
