@@ -1,0 +1,11 @@
+{
+  "name": "eliotbyte.asyncterrain",
+  "version": "0.0.0",
+  "displayName": "AsyncTerrain",
+  "unity": "2021.2",
+  "description": "Async terrain generation.",
+  "collaborators": [
+    "https://github.com/eliotbyte",
+    "https://github.com/nilpunch"
+  ]
+}
