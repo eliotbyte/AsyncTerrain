@@ -117,6 +117,7 @@ namespace EliotByte.AsyncTerrain
 
             Mesh.vertices = Vertices;
             Mesh.RecalculateNormals();
+            Mesh.RecalculateBounds();
         }
 
         private void OnDestroy()
