@@ -13,6 +13,9 @@ namespace EliotByte.AsyncTerrain
 
         public MeshPlane(float[,] heights, Vector3 meshSize)
         {
+            if (meshSize.x <= 0 || meshSize.y <= 0 || meshSize.z <= 0)
+                throw new System.ArgumentException("Size dimensions must be greater than zero.");
+
             _heights = heights;
             _meshSize = meshSize;
             _gridSize = new Vector2Int(heights.GetLength(0), heights.GetLength(1));
@@ -55,7 +58,7 @@ namespace EliotByte.AsyncTerrain
             }
         }
 
-        public Mesh GenerateMesh()
+        public Mesh CreateMesh()
         {
             Mesh mesh = new() {vertices = _vertices, uv = _uvs, triangles = _triangles};
             mesh.RecalculateNormals();

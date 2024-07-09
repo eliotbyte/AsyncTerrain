@@ -28,26 +28,16 @@ namespace EliotByte.AsyncTerrain
             Initialized = true;
         }
 
-        public void SetHeights(float[,] heights, Vector3 size)
+        public void SetHeights(MeshPlane meshPlane)
         {
             if (!Initialized)
                 throw new System.InvalidOperationException(
                     "Terrain has not been initialized. Call Initialize() before setting heights.");
 
-            if (size.x <= 0 || size.y <= 0 || size.z <= 0)
-                throw new System.ArgumentException("Size dimensions must be greater than zero.");
-
-            Heights = heights;
-            Size = size;
-
             if (Mesh != null )
                 Destroy(Mesh);
 
-            MeshPlane plane = new MeshPlane(heights, size);
-
-            plane.Generate();
-
-            Mesh = plane.GenerateMesh();
+            Mesh = meshPlane.CreateMesh();
             _meshFilter.mesh = Mesh;
         }
 
